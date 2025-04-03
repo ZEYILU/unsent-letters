@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Container, Typography, Box, TextField, Button, Card, CardContent } from '@mui/material';
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function App() {
   const [letters, setLetters] = useState([]);
   const [newLetter, setNewLetter] = useState({
@@ -16,7 +18,7 @@ function App() {
 
   const fetchLetters = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/letters');
+      const response = await axios.get(`${API_URL}/api/letters`);
       setLetters(response.data);
     } catch (error) {
       console.error('Error fetching letters:', error);
@@ -26,7 +28,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3001/api/letters', newLetter);
+      await axios.post(`${API_URL}/api/letters`, newLetter);
       setNewLetter({ title: '', content: '', author: '' });
       fetchLetters();
     } catch (error) {
